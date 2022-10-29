@@ -12,6 +12,16 @@ trait ApiTrait
         return $this->apiResponse(true, $message, $data, $code);
     }
 
+    public function return403Response($message, $data = []): JsonResponse
+    {
+        return $this->apiResponse(false, $message, $data, Response::HTTP_FORBIDDEN);
+    }
+
+    public function return422Response($message, $data = [], $code = Response::HTTP_UNPROCESSABLE_ENTITY): JsonResponse
+    {
+        return $this->apiResponse(false, $message, $data, $code);
+    }
+
     public function apiResponse($success = true, $message = '', $data = [], $status = Response::HTTP_OK): JsonResponse
     {
         $response = [

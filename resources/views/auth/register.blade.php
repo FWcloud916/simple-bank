@@ -18,6 +18,15 @@
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
+            <!-- Account -->
+            <div>
+                <x-input-label for="account" :value="__('Account')" />
+
+                <x-text-input id="account" class="block mt-1 w-full" type="text" name="account" :value="old('account')" required autofocus />
+
+                <x-input-error :messages="$errors->get('account')" class="mt-2" />
+            </div>
+
             <!-- Email Address -->
             <div class="mt-4">
                 <x-input-label for="email" :value="__('Email')" />

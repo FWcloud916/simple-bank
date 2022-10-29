@@ -3,13 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\User;
 use App\Traits\ApiTrait;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     use ApiTrait;
+
+    public function register(RegisterRequest $request)
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'account' => $request->account,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $token = $user->createToken('apiToken')->plainTextToken;
+
+        return $this->successResponse(
+            'User registered successfully',
+            [
+                'user' => $user,
+                'token' => $token,
+            ],
+        );
+    }
 
     public function login(LoginRequest $request)
     {
