@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'account'
     ];
 
     /**
@@ -41,4 +42,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getLastBalance(): int
+    {
+        return $this->accountRecords()->latest()->first()->balance ?? 0;
+    }
+
+    public function accountRecords()
+    {
+        return $this->hasMany(AccountRecord::class);
+    }
 }

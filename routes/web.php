@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountRecordViewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::controller(AccountRecordViewController::class)->group(function () {
+        Route::get('/accounts', 'index')->name('accounts.index');
+        Route::get('/accounts/{user_id}', 'show')->name('accounts.show');
+    });
+
+});
+
+require __DIR__.'/auth.php';
